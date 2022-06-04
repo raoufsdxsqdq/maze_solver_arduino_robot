@@ -1,97 +1,170 @@
+#include <string.h>
 #include <Arduino.h>
 
-void CALCULATE_SHORTEST_PATH(char MAZE_ARRAY[], int SIZE_OF_ARRAY)
-{
-  /*ONCE THE ROBOT COMPLETES THE MAZE THE FINAL SHORTEST PATH CALCULATED
-  IS STORED IN THE ROBOT MEMORY.THIS SHORTEST PATH IS USED TO COMPLETE
-  THE SAME MAZE IN SHORTEST AMOUNT OF TIME.(L :LEFT, R:RIGHT, B:BACK,S:STRAIGHT)
-  BELOW ARE THE FEW SUBSTITUTIONS TO CONVERT FULL MAZE PATH TO ITS 
-  SHORTEST PATH:
-  LBL = S
-  LBR = B
-  LBS = R
-  RBL = B
-  SBL = R
-  SBS = B
-  LBL = S */
+
   
   
-  char ACTION;
-  
-  for(int i = 0; i <= SIZE_OF_ARRAY-2; i++)
-    {
-      ACTION = MAZE_ARRAY[i];
-           
-      if(ACTION == 'B')
-        {
-          if(MAZE_ARRAY[i-1]== 'L' && MAZE_ARRAY[i+1] == 'R')
-            {
-              MAZE_ARRAY[i] = 'B';
-              MAZE_ARRAY[i-1] = 0;
-              MAZE_ARRAY[i+1] = 0;
-              //REARRANGE(MAZE_ARRAY,SIZE_OF_ARRAY,i-1,i,i+1); 
-            }
 
-           if(MAZE_ARRAY[i-1]== 'L' && MAZE_ARRAY[i+1] == 'S')
-            {
-              MAZE_ARRAY[i] = 'R';
-              MAZE_ARRAY[i-1] = 0;
-              MAZE_ARRAY[i+1] = 0;
-             // REARRANGE(MAZE_ARRAY,SIZE_OF_ARRAY,i-1,i,i+1);
-            }
+/*   function to check the number of back in the path   */
 
-            if(MAZE_ARRAY[i-1]== 'R' && MAZE_ARRAY[i+1] == 'L')
-            {
-              MAZE_ARRAY[i] = 'B';
-              MAZE_ARRAY[i-1] = 0;
-              MAZE_ARRAY[i+1] = 0;
-             // REARRANGE(MAZE_ARRAY,SIZE_OF_ARRAY,i-1,i,i+1);         
-            }
 
-            if(MAZE_ARRAY[i-1]== 'S' && MAZE_ARRAY[i+1] == 'L')
-            {
-              MAZE_ARRAY[i] = 'R';
-              MAZE_ARRAY[i-1] = 0;
-              MAZE_ARRAY[i+1] = 0;
-             // REARRANGE(MAZE_ARRAY,SIZE_OF_ARRAY,i-1,i,i+1);             
-            }
+int check(char array[], int size){
+int number = 0;
+for (int i = 0; i < size; i++){
 
-            if(MAZE_ARRAY[i-1]== 'S' && MAZE_ARRAY[i+1] == 'S')
-            {
-              MAZE_ARRAY[i] = 'B';
-              MAZE_ARRAY[i-1] = 0;
-              MAZE_ARRAY[i+1] = 0;
-             // REARRANGE(MAZE_ARRAY,SIZE_OF_ARRAY,i-1,i,i+1);             
-            }
+    if (array[i] == 'B'){
 
-            if(MAZE_ARRAY[i-1]== 'L' && MAZE_ARRAY[i+1] == 'L')
-            {
-              MAZE_ARRAY[i] = 'S';
-              MAZE_ARRAY[i-1] = 0;
-              MAZE_ARRAY[i+1] = 0;
-            //  REARRANGE(MAZE_ARRAY,SIZE_OF_ARRAY,i-1,i,i+1);
-            }
-            
-          i = -1;
-        }
-       
-       delay(100);   
+        number ++;
+
     }
 }
-  
-  
-  
-void REARRANGE(char MAZE_ARRAY[], int SIZE_OF_ARRAY){
-//char old;
-for (int i =0; i < SIZE_OF_ARRAY; i++){
+return number;
 
-
-MAZE_ARRAY[i-1] = MAZE_ARRAY[i];
-MAZE_ARRAY[i] = MAZE_ARRAY[i+1];
 
 
 
 }
+
+
+/*   function to check the path array issue           */
+
+int check_final(char array[], int size){
+int number = 0;
+for (int i = 0; i < size; i++){
+
+    if (array[i] == 'L' || array[i] == 'R' || array[i] == 'S' ){
+
+        number ++;
+
+    }
+}
+return number;
+
+}
+
+
   
-}  
+
+
+
+
+
+int path_logic()
+{   int j,bN,ISSUEprint, max = 15;
+    int i = 0;
+    char path[15] = {'L','B','L','L','L','B','S','B','L','L','B','S','L','L'};
+ bN = check(path,max);
+
+ /* if number of back is not 0 do again the loop */
+
+
+while (bN != 0){
+        int done = 0; /* to assure that the loop will do 1 DECITION each turn */
+    for ( i =0; i< max; i++){
+
+    if ( path[i] == 'B'){
+            /* path will be optimized from LBL TO S*/
+
+        if (path[i-1] == 'L' && path[i+1] == 'L' && done == 0){
+
+            path[i-1] = 'S';
+
+            /* rearrange the path */
+            for(j = i; j< max; j++){
+
+                path[j] = path [j+2];
+
+            }
+done =1;
+        }
+        /* path will be optimized from LBS TO R */
+        if (path[i-1] == 'L' && path[i+1] == 'S' && done == 0){
+
+            path[i-1] = 'R';
+            for(j = i; j< max; j++){
+
+                path[j] = path [j+2];
+
+            }
+            done =1;
+        }
+
+      /* path will be optimized from LBR TO B*/
+        if (path[i-1] == 'L' && path[i+1] == 'R' && done == 0){
+
+            path[i-1] = 'B';
+            for(j = i; j< max; j++){
+
+                path[j] = path [j+2];
+
+            }
+            done =1;
+        }
+
+  /* path will be optimized from RBL TO B*/
+        if (path[i-1] == 'R' && path[i+1] == 'L' && done == 0){
+
+            path[i-1] = 'B';
+            for(j = i; j< max; j++){
+
+                path[j] = path [j+2];
+
+            }
+            done =1;
+        }
+
+
+      /* path will be optimized from SBL TO R*/
+        if (path[i-1] == 'S' && path[i+1] == 'L' && done == 0){
+
+            path[i-1] = 'R';
+            for(j = i; j< max; j++){
+
+                path[j] = path [j+2];
+
+            }
+            done =1;
+        }
+
+      /* path will be optimized from SBS TO B*/
+        if (path[i-1] == 'S' && path[i+1] == 'S' && done == 0){
+
+            path[i-1] = 'B';
+            for(j = i; j< max; j++){
+
+                path[j] = path [j+2];
+
+            }
+            done =1;
+        }
+
+
+    }
+
+    }
+
+
+
+     bN = check(path,max);   /* check again the number of  backs in the path */
+
+}
+
+/* check the number of right char */
+
+ISSUEprint = check_final(path,max);
+
+printf("%d \n", ISSUEprint);
+
+
+/* print the optimized path */
+
+for(j = 0; j<ISSUEprint; j++){
+
+                printf("%c ",path[j]);}
+    return 0;
+}
+
+
+
+
   
