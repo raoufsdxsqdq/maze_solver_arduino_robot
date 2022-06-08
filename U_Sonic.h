@@ -1,3 +1,5 @@
+#ifndef _U_SONIC_H_
+#define _U_SONIC_H_
 #include<Arduino.h>
 #include "difinitions.h"
 
@@ -30,7 +32,8 @@ void US_front(){                      //////////////// function for the front ul
   distance_front = duration_front * 0.034 / 2;
   
   Serial.print("Distance_front:  ");
-  Serial.println(distance_front);}
+  Serial.println(distance_front);
+  }
   
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
   void US_right(){      /////////////////////////func for the right ultra sonic  //////////////////
@@ -39,7 +42,8 @@ void US_front(){                      //////////////// function for the front ul
   distance_right = duration_right * 0.034 / 2;
   
   Serial.print("Distance_right:  ");
-  Serial.println (distance_right);}
+  Serial.println (distance_right);
+  }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 void US_left(){                    ////////////////////// func for the left  ultra sonic /////////////////////
   US_operation(Trigo_pin_left);
@@ -47,9 +51,10 @@ void US_left(){                    ////////////////////// func for the left  ult
   distance_left = duration_left * 0.034 / 2;
  
   Serial.print("Distance_left: ");
-  Serial.println(distance_left);}
+  Serial.println(distance_left);
+  }
   
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   
-
+#endif
