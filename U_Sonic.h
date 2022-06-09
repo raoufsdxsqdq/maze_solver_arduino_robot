@@ -31,8 +31,8 @@ void US_front(){                      //////////////// function for the front ul
   duration_front = pulseIn(ultra_sonic_front, HIGH);
   distance_front = duration_front * 0.034 / 2;
   
-  Serial.print("Distance_front:  ");
-  Serial.println(distance_front);
+  //Serial.print("Distance_front:  ");
+  //Serial.println(distance_front);
   }
   
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,8 +41,8 @@ void US_front(){                      //////////////// function for the front ul
   duration_right = pulseIn(ultra_sonic_right, HIGH);
   distance_right = duration_right * 0.034 / 2;
   
-  Serial.print("Distance_right:  ");
-  Serial.println (distance_right);
+  //Serial.print("Distance_right:  ");
+ //Serial.println (distance_right);
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 void US_left(){                    ////////////////////// func for the left  ultra sonic /////////////////////
@@ -50,8 +50,8 @@ void US_left(){                    ////////////////////// func for the left  ult
   duration_left = pulseIn(ultra_sonic_left, HIGH);
   distance_left = duration_left * 0.034 / 2;
  
-  Serial.print("Distance_left: ");
-  Serial.println(distance_left);
+ // Serial.print("Distance_left: ");
+  //Serial.println(distance_left);
   }
   
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////

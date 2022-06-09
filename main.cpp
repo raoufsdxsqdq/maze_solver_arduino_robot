@@ -6,8 +6,7 @@
 char maze_array[100]; // >>>>>>>>>>>>>> array where the maze will be saved
                       // >>>>>>>>>>>> variable for the distance  of the condition
 int i = 0;            //  >>>>>>>>>>>>>   index of the array
-int speedLeft = 60;
-int speedRight = 60;
+
 
 void functions()
 {
@@ -43,20 +42,18 @@ void loop()
 
    // >>>>>>>>>>>>>>>>>>>   start calculations of distancea
 
-   if (distance_left < rest_distance && distance_front > 10 && distance_right < rest_distance) // Straight path
+   if (distance_left < rest_distance && distance_front > 8 && distance_right < rest_distance) // Straight path
    {
+      
       move_forward(speedRight, speedLeft);
       diviate(speedRight, speedLeft);
    }
-   else
-      stopp();
-   // delay(20);
 
-   if (distance_left > rest_distance && distance_front > rest_distance ||
-       distance_right > rest_distance && distance_front > rest_distance || //  >>>>>>>>  if is there any intersaction then do
-       distance_left > rest_distance && distance_right > rest_distance ||
-       distance_left > rest_distance && distance_front > rest_distance && distance_right > rest_distance ||
-       distance_left > rest_distance || distance_right > rest_distance
+   else if (distance_left > rest_distance && distance_front > rest_distance ||
+            distance_right > rest_distance && distance_front > rest_distance || //  >>>>>>>>  if is there any intersaction then do
+            distance_left > rest_distance && distance_right > rest_distance ||
+            distance_left > rest_distance && distance_front > rest_distance && distance_right > rest_distance ||
+            distance_left > rest_distance || distance_right > rest_distance
 
    )
    {
@@ -69,19 +66,17 @@ void loop()
       {
          maze_array[i] = 'L';
          stopp();
-
          turn_left();
-
-         // turn_left();
-
+         
+         
          i++;
       }
-
       else if (distance_front > rest_distance)
       {
          maze_array[i] = 'S';
          stopp();
          move_forward(speedRight, speedLeft);
+         i++;
       }
       else if (distance_right > rest_distance)
       {
@@ -90,4 +85,6 @@ void loop()
          turn_right();
       }
    }
+   else
+      stopp();
 }
